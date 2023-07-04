@@ -39,9 +39,7 @@ function App() {
       document.body.style.backgroundColor='#042743';
       showAlert("Dark mode activated", "success");
       document.title="TextUtils- Dark mode";
-      // setInterval(() => {
-      //   document.title="TextUtils is your one stop destination."
-      // }, 2000);
+      
     }
      else {
       setMode('light');
