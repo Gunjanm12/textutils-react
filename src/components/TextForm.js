@@ -21,14 +21,20 @@ export default function TextForm(props){
         let newText=("");
         setText(newText);
     }
-    const handleClClick=()=>{
-        // console.log("Upper case was clicked");
-        let newText=text.charAt.toUpperCase();
-        setText(newText);
-    }
+   
     const handleOnChange=(event)=>{
         console.log("On change");
         setText(event.target.value);
+    }
+    const handleCopy = () => {
+        navigator.clipboard.writeText(text); 
+        props.showAlert("Copied to Clipboard!", "success");
+    }
+
+    const handleExtraSpaces = () => {
+        let newText = text.split(/[ ]+/);
+        setText(newText.join(" "));
+        props.showAlert("Extra spaces removed!", "success");
     }
 
     const[text,setText] = useState('');
@@ -42,11 +48,11 @@ export default function TextForm(props){
         <div className="mb-3">
             <textarea className="form-control" id="mybox" value={text} style={{backgroundColor: props.mode ==='dark' ? '#042743':'white',color:props.mode==='dark'?'white':'black'}} onChange={handleOnChange} rows="8"></textarea>
         </div>
-
-        <button className={`btn btn-${props.mode==='light'?'info':'light'} mx-2`} onClick={handleLowClick} style={{color: props.mode==='light'?'white':'black'}} > Convert to lowercase</button>
-        <button className={`btn btn-${props.mode==='light'?'info':'light'} mx-2`} onClick={handleClClick} style={{color: props.mode==='light'?'white':'black'}} > Clear</button>
-        <button className={`btn btn-${props.mode==='light'?'info':'light'} mx-2`}onClick={handleUpClick} style={{color: props.mode==='light'?'white':'black'}} > Convert to Uppercase</button>
-        <button className={`btn btn-${props.mode==='light'?'info':'light'} mx-2`}onClick={handleClearClick} style={{color: props.mode==='light'?'white':'black'}} > Clear Text</button>
+        <button disabled={text.length===0} className={`btn btn-${props.mode==='light'?'info':'light'} mx-2`} onClick={handleLowClick} style={{color: props.mode==='light'?'white':'black'}} > Convert to lowercase</button>
+        <button disabled={text.length===0} className={`btn btn-${props.mode==='light'?'info':'light'} mx-2`}onClick={handleUpClick} style={{color: props.mode==='light'?'white':'black'}} > Convert to Uppercase</button>
+        <button disabled={text.length===0} className={`btn btn-${props.mode==='light'?'info':'light'} mx-2`} onClick={handleCopy} style={{color: props.mode==='light'?'white':'black'}}>Copy Text</button>
+        <button disabled={text.length===0} className={`btn btn-${props.mode==='light'?'info':'light'} mx-2`} onClick={handleExtraSpaces} style={{color: props.mode==='light'?'white':'black'}}>Remove Extra Spaces</button>
+        <button disabled={text.length===0} className={`btn btn-${props.mode==='light'?'info':'light'} mx-2`}onClick={handleClearClick} style={{color: props.mode==='light'?'white':'black'}} > Clear Text</button>
     </div>
     <div className="container my-3" style={{color: props.mode==='dark'?'white':'black'}}>
         <h2>Your text summary</h2>
